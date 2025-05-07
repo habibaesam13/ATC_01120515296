@@ -14,14 +14,14 @@ public function up()
 {
     Schema::create('events', function (Blueprint $table) {
         $table->id();
-        $table->string('name');
+        $table->string('name')->unique();
         $table->text('description');
         $table->decimal('price', 8, 2);
         $table->unsignedBigInteger('category_id'); 
         $table->date("date");
         $table->string("image")->nullable();
         $table->text("venue");
-        $table->int("number_of_tickets");
+        $table->integer("number_of_tickets");
         $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
         $table->timestamps();
     });

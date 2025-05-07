@@ -12,11 +12,23 @@ class Event extends Model
         "price",
         "category_id",
         "image",
+        "number_of_tickets",
         "date",
         "venue",
     ];
     public function category()
     {
-        return $this->belongsTo(Category::class); // An event belongs to a category
+        return $this->belongsTo(Category::class); 
     }
+    public function tickets()
+{
+    return $this->hasMany(Ticket::class);
+}
+
+public function users()
+{
+    return $this->belongsToMany(User::class);
+}
+
+
 }
