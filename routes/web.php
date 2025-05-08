@@ -9,6 +9,8 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\system\EventController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\system\TicketController;
+
 /* public routes */
 
 Route::get('/', function () {
@@ -54,6 +56,8 @@ Route::post('logout', [authController::class, 'logout'])->name('logout');
     Route::get("/users/edit/{id}",[UserController::class, 'edit'])->name('users.edit');
     Route::put("/users/edit/{id}",[UserController::class, 'update'])->name('users.update');
     Route::delete('/users/delete/{id}',[UserController::class, 'destroy'])->name('users.destroy');
+    //ticket routes
+    Route::get('/event/tickets/{id}',[TicketController::class,'showEventTickets'])->name('event.tickets');
 
     });
     

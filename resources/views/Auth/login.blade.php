@@ -12,31 +12,35 @@ Login | {{ config('app.name') }}
 
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Email address</label>
-                <input 
-                    type="email" 
-                    name="email" 
-                    value="{{ old('email') }}" 
-                    class="form-control @error('email') is-invalid @enderror" 
+                <input
+                    type="email"
+                    name="email"
+                    value="{{ old('email') }}"
+                    class="form-control @error('email') is-invalid @enderror"
                     id="exampleInputEmail1"
-                    required
-                >
+                    required>
                 @error('email')
-                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                <div class="invalid-feedback d-block">{{ $message }}</div>
                 @enderror
             </div>
 
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
-                <input 
-                    type="password" 
-                    class="form-control @error('pass') is-invalid @enderror" 
-                    id="password" 
-                    name="password"
-                    required
-                >
+                <div class="input-group">
+                    <input
+                        type="password"
+                        class="form-control @error('pass') is-invalid @enderror"
+                        id="password"
+                        name="password"
+                        required>
+                    <button type="button" id="toggle-password" class="btn btn-outline-secondary">
+                        <i class="bi bi-eye-slash" id="toggle-password-icon"></i>
+                    </button>
+                </div>
                 @error('pass')
-                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                <div class="invalid-feedback d-block">{{ $message }}</div>
                 @enderror
+
             </div>
 
             <button type="submit" class="btn btn-primary w-100 mb-3">Login</button>
@@ -44,7 +48,7 @@ Login | {{ config('app.name') }}
 
         <div class="text-center mt-2">
             <small>
-                Don't have an account? 
+                Don't have an account?
                 <a href="{{ route('register') }}">Register here</a>
             </small>
         </div>

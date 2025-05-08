@@ -122,6 +122,7 @@ Admin Dashboard | {{ config('app.name') }}
                 <div class="card-footer d-flex justify-content-between">
                     <a href="{{ route('events.show', $event->id) }}" class="btn btn-info btn-sm">View</a>
                     <a href="{{ route('events.edit', $event->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="{{ route('event.tickets', $event->id) }}" class="btn btn-info btn-sm">View Tickets</a>
                     <form action="{{ route('events.destroy', $event->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this event?');">
                         @csrf
                         @method('DELETE')
