@@ -102,40 +102,45 @@ Admin Dashboard | {{ config('app.name') }}
         </tbody>
     </table>
 <!--Events-->
-    <h3>Events</h3>
-    <a href="{{ route('events.create') }}" class="btn btn-primary mb-3">Create New Event</a>
+<h3>Events</h3>
+<a href="{{ route('events.create') }}" class="btn btn-primary mb-3">Create New Event</a>
+
+@foreach($groupedEvents as $categoryName => $events)
+    <h4 class="mt-4">Category | {{ $categoryName }}</h4>
 
     <div class="row">
         @forelse ($events as $event)
-        <div class="col-md-4 mb-4">
-            <div class="card h-100 shadow-sm">
-                @if($event->image)
-                <img src="{{ asset('event_images/' . $event->image) }}" class="card-img-top" alt="{{ $event->name }}" style="height: 200px; object-fit: cover;">
-                @endif
-                <div class="card-body">
-                    <h5 class="card-title">{{ $event->name }}</h5>
-                    <p class="card-text"><strong>Date:</strong> {{ $event->date }}</p>
-                    <p class="card-text"><strong>Venue:</strong> {{ $event->venue }}</p>
-                    <p class="card-text"><strong>Price:</strong> ${{ $event->price }}</p>
-                    <p class="card-text"><strong>Tickets:</strong> {{ $event->number_of_tickets }}</p>
-                </div>
-                <div class="card-footer d-flex justify-content-between">
-                    <a href="{{ route('events.show', $event->id) }}" class="btn btn-info btn-sm">View</a>
-                    <a href="{{ route('events.edit', $event->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                    <a href="{{ route('event.tickets', $event->id) }}" class="btn btn-info btn-sm">View Tickets</a>
-                    <form action="{{ route('events.destroy', $event->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this event?');">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                    </form>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    @if($event->image)
+                        <img src="{{ asset('event_images/' . $event->image) }}" class="card-img-top" alt="{{ $event->name }}" style="height: 200px; object-fit: cover;">
+                    @endif
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $event->name }}</h5>
+                        <p class="card-text"><strong>Date:</strong> {{ $event->date }}</p>
+                        <p class="card-text"><strong>Venue:</strong> {{ $event->venue }}</p>
+                        <p class="card-text"><strong>Price:</strong> ${{ $event->price }}</p>
+                        <p class="card-text"><strong>Tickets:</strong> {{ $event->number_of_tickets }}</p>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between">
+                        <a href="{{ route('events.show', $event->id) }}" class="btn btn-info btn-sm">View</a>
+                        <a href="{{ route('events.edit', $event->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="{{ route('event.tickets', $event->id) }}" class="btn btn-info btn-sm">View Tickets</a>
+                        <form action="{{ route('events.destroy', $event->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this event?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
         @empty
-        <div class="alert alert-info col-12">
-            No events found.
-        </div>
+            <div class="alert alert-info col-12">
+                No events found in this category.
+            </div>
         @endforelse
     </div>
+@endforeach
+
 </div>
 @endsection

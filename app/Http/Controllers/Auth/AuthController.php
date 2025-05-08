@@ -29,7 +29,7 @@ class authController extends Controller
             if ($user->role === Role::ADMIN) {
                 return redirect()->route('admin.dashboard')->with('success', 'Logged in successfully as Admin');
             } elseif ($user->role === Role::USER) {
-                return redirect()->route('user.dashboard')->with('success', 'Logged in successfully as User');
+                return redirect()->route('home page')->with('success', 'Logged in successfully as User');
             }
         }
 

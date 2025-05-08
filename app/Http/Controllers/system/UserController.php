@@ -6,13 +6,13 @@ use Illuminate\Http\Request;
 use App\Services\UserService;
 use App\Http\Controllers\Controller;
 use Illuminate\Validation\Rules\Password;
-
 class UserController extends Controller
 {
     protected  $userService;
     public function __construct(UserService $userService){
         $this->userService=$userService;
     }
+    
     public function create()
     {
         return view("Admin.users.create");
@@ -81,4 +81,6 @@ class UserController extends Controller
         if ($result===1) return redirect()->route('admin.dashboard')->with('success', "User deleted successfully");
         return back()->with('error', "User not found");
     }
+
+
 }

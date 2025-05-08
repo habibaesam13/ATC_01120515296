@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\system\EventController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\HomePage\HomePageController;
 use App\Http\Controllers\system\TicketController;
 
 /* public routes */
@@ -42,7 +43,7 @@ Route::post('logout', [authController::class, 'logout'])->name('logout');
     Route::delete("/categories/delete/{id}", [CategoryController::class, 'destroy'])->name('categories.destroy');
 
         // Event routes
-    Route::get("/events/show/{id}",[EventController::class, 'show'])->name('events.show');
+
     Route::get("/events/create", [EventController::class, 'create'])->name('events.create');
     Route::post("/events/create", [EventController::class, 'store'])->name('events.store');
     Route::get("/events/edit/{id}",[EventController::class, 'edit'])->name('events.edit');
@@ -58,23 +59,19 @@ Route::post('logout', [authController::class, 'logout'])->name('logout');
     Route::delete('/users/delete/{id}',[UserController::class, 'destroy'])->name('users.destroy');
     //ticket routes
     Route::get('/event/tickets/{id}',[TicketController::class,'showEventTickets'])->name('event.tickets');
-
     });
     
 
-
-
-
-
+Route::get('/event/show/{id}', [EventController::class,'show'])->middleware(AuthMiddleware::class)->name("events.show");
 
     //User Routes
-Route::prefix("/user")->middleware([
-    AuthMiddleware::class,
-    RoleMiddleware::class . ':user',
-])->group(function () {
-    Route::get('/dashboard', function(){
-        return view("User.dashboard");
-    })->name("user.dashboard");
+Route::prefix("/user")->middleware([AuthMiddleware::class, RoleMiddleware::class . ':user',])->group(function () {
+    Route::get('/dashboard', function(){return view("User.dashboard");})->name("user.dashboard");
+    //tickets booking
+    Route::post('/events/{event}/book', [EventController::class, 'bookTicket'])->name('tickets.book');
+    Route::post('/events/{event}/unbook', [EventController::class, 'unbookTicket'])->name('tickets.unbook');
+    Route::post('/events/{event}/unbook-all', [EventController::class, 'unbookAllTickets'])->name('tickets.unbookAll');
+
     
 });
 
@@ -85,5 +82,5 @@ Route::prefix("/user")->middleware([
         AuthMiddleware::class,
         RoleMiddleware::class . ':user',
     ])->group(function () {
-        Route::get('/homepage',[EventController::class,"index"])->name("home page");
+        Route::get('/homepage',[HomePageController::class,"index"])->name("home page");
     });

@@ -22,8 +22,8 @@ class AdminDashboardController extends Controller
     public function index()
     {
         $categories = $this->categoryService->getAllCategories();
-        $events=$this->eventService->getAllEvents();
+        $groupedEvents=$this->eventService->getAllEvents();
         $users=$this->userService->getAllUsers();
-        return view('Admin.dashboard', compact(['categories','events','users']));
+        return view('Admin.dashboard', compact(['categories','groupedEvents','users']));
     }
 }

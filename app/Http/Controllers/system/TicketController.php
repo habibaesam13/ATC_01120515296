@@ -31,4 +31,5 @@ class TicketController extends Controller
 
         return view('tickets.eventTickets', ['event' => $event, 'tickets' => $result]);
     }
+    
 }

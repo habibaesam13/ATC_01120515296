@@ -16,13 +16,21 @@ class EventService
         //
     }
     public function getAllEvents()
-    {
-        $events = Event::with(['category', 'tickets'])->paginate(10);
-        if ($events->isEmpty()) {
-            return -1;
-        }
-        return $events;
+{
+    // Retrieve events with their associated categories and tickets
+    $events = Event::with(['category', 'tickets'])->get();
+    
+    // Check if events exist
+    if ($events->isEmpty()) {
+        return -1;
     }
+
+    // Group events by category
+    $groupedEvents = $events->groupBy('category.name');
+    
+    return $groupedEvents;
+}
+
     public function store($data)
     {
         DB::beginTransaction();

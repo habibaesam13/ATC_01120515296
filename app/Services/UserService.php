@@ -4,15 +4,16 @@ namespace App\Services;
 use App\Models\User;
 use App\Models\Ticket;
 use Illuminate\Support\Facades\Hash;
-
+use App\Services\EventService;
 class UserService
 {
+    protected $eventService;
     /**
      * Create a new class instance.
      */
-    public function __construct()
+    public function __construct(EventService $eventService)
     {
-        //
+        $this->eventService=$eventService;
     }
     public function getAllUsers()
     {
@@ -99,5 +100,4 @@ public function destroy($userId)
     return 1; // Successfully deleted
 }
 
-    
 }
