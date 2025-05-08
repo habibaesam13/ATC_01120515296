@@ -16,7 +16,7 @@ class CategoryService
     }
     public function getAllCategories()
     {
-        $categories = Category::all();
+        $categories = Category::with('events') ->paginate(10);
         if ($categories->isEmpty()) {
             return "No Cateogy Found!";
         }
@@ -36,17 +36,29 @@ class CategoryService
 
         return 1;
     }
-    public function update($categoryId,$newName){
-        
-        $category = Category::find($categoryId);
+    public function update($categoryId, $newName)
+{
+    $category = Category::find($categoryId);
 
-        if (!$category) {
-            return -1;
-        }
-            $category->name = $newName["name"]; 
-            $category->save();
-            return 1;
+    if (!$category) {
+        return -1; // Category not found
     }
+
+    // Check for duplicate name (case-insensitive), excluding current category
+    $existingCategory = Category::whereRaw('LOWER(name) = ?', [strtolower($newName['name'])])
+        ->where('id', '!=', $categoryId)
+        ->first();
+
+    if ($existingCategory) {
+        return -2; // Name already exists in another category
+    }
+
+    $category->name = $newName['name'];
+    $category->save();
+
+    return 1;
+}
+
     public function destroy($categoryId){
         $category = Category::find($categoryId);
 

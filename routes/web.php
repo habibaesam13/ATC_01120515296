@@ -4,15 +4,14 @@ use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\AuthMiddleware;
 use App\Http\Middleware\RoleMiddleware;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\EventController;
-use App\Http\Controllers\TicketController;
-use App\Http\Controllers\CategoryDashboardController;
-
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\system\EventController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\AdminDashboardController;
 /* public routes */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view("Auth.login") ;
 });
 
 Route::get("/login", function () {
@@ -24,45 +23,30 @@ Route::get("/register", function () {
     return view("Auth.signup");
 })->name("register");
 Route::post("/register", [AuthController::class, "register"])->name("auth.register");
+Route::post('logout', [authController::class, 'logout'])->name('logout');
 
 /* protected routes */
+
     //Admin Routes
-
-
     Route::prefix('admin')->middleware([AuthMiddleware::class, RoleMiddleware::class . ':admin'])->group(function () {
-        Route::get('/', [CategoryDashboardController::class, 'index'])->name('admin.dashboard');
-        
-        //add category
-        Route::get("/categories/create",[CategoryDashboardController::class, 'addCategory'])->name('admin.categories.create');
-        Route::post("/categories/create",[CategoryDashboardController::class, 'storeCategory'])->name('admin.categories.store');
-        //update category
-        Route::get("/categories/edit/{id}", [CategoryDashboardController::class, 'updateCategory'])->name('admin.categories.edit');
-        Route::put("/categories/edit/{id}", [CategoryDashboardController::class, 'editCategory'])->name('admin.categories.update');
-        //delet category
-        Route::delete("/categories/delete/{id}",[CategoryDashboardController::class, 'destroyCategory'])->name('admin.categories.destroy');
+        Route::get('/', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
 
+        // Category routes
+    Route::get("/categories/create", [CategoryController::class, 'create'])->name('categories.create');
+    Route::post("/categories/create", [CategoryController::class, 'store'])->name('categories.store');
+    Route::get("/categories/edit/{id}", [CategoryController::class, 'edit'])->name('categories.edit');
+    Route::put("/categories/edit/{id}", [CategoryController::class, 'update'])->name('categories.update');
+    Route::delete("/categories/delete/{id}", [CategoryController::class, 'destroy'])->name('categories.destroy');
+
+        // Event routes
+    Route::get("/events/show/{id}",[EventController::class, 'show'])->name('events.show');
+    Route::get("/events/create", [EventController::class, 'create'])->name('events.create');
+    Route::post("/events/create", [EventController::class, 'store'])->name('events.store');
+    Route::get("/events/edit/{id}",[EventController::class, 'edit'])->name('events.edit');
+    route::put("/events/edit/{id}",[EventController::class, 'update'])->name('events.update');
+    Route::delete('/events/delete/{id}',[EventController::class, 'destroy'])->name('events.destroy');
     });
     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -79,19 +63,10 @@ Route::prefix("/user")->middleware([
     })->name("user.dashboard");
     
 });
-//booking routes
-Route::middleware([
-    AuthMiddleware::class,
-    RoleMiddleware::class . ':user',
-])->group(function () {
-    Route::get('/events/{eventId}', [EventController::class, 'show'])->name('events.show');  // Event details page
-    Route::post('/events/{eventId}/book', [TicketController::class, 'book'])->name('tickets.book');  // Book event ticket
-    Route::get('/booking/success', [TicketController::class, 'bookingSuccess'])->name('booking.success');  // Booking success page
-    Route::delete('/events/{id}/unbook', [TicketController::class, 'unbook'])->name('ticket.unbook');
-});
 
 
-    //main page
+
+//main page
     Route::middleware([
         AuthMiddleware::class,
         RoleMiddleware::class . ':user',

@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
 use App\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rules\Password;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
 
 class authController extends Controller
@@ -62,5 +63,18 @@ class authController extends Controller
     
         return redirect()->route('login')->with('success', 'Account created successfully. Please log in.');
     }
-    
+    public function logout(Request $request)
+    {
+        // Log out the user
+        Auth::logout();
+
+        // Invalidate the session
+        $request->session()->invalidate();
+
+        // Regenerate the session token to protect against session fixation attacks
+        $request->session()->regenerateToken();
+
+        // Redirect the user to the login page or homepage
+        return redirect()->route('login')->with('success', 'You have logged out successfully.');
+    }
 }

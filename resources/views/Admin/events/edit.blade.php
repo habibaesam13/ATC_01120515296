@@ -1,9 +1,21 @@
 @extends('appLayout')
-
+@section('title')
+Edit Event | {{ config('app.name') }}
+@endsection
 @section('content')
     <div class="container">
         <h1>Edit Event</h1>
-        <form action="{{ route('admin.events.update', $event->id) }}" method="POST" enctype="multipart/form-data">
+        @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+        <form action="{{ route('events.update', $event->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
@@ -23,10 +35,10 @@
             </div>
 
             <div class="form-group">
-                <label for="category_name">Category</label>
-                <select name="category_name" class="form-control" required>
+                <label for="category_id">Category</label>
+                <select name="category_id" class="form-control" required>
                     @foreach ($categories as $category)
-                        <option value="{{ $category->name }}" {{ $event->category_name == $category->name ? 'selected' : '' }}>
+                        <option value="{{ $category->id }}" {{ $event->category_name == $category->name ? 'selected' : '' }}>
                             {{ $category->name }}
                         </option>
                     @endforeach
