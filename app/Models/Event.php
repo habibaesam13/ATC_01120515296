@@ -21,14 +21,15 @@ class Event extends Model
         return $this->belongsTo(Category::class); 
     }
     public function tickets()
-{
-    return $this->hasMany(Ticket::class);
-}
-
-public function users()
-{
-    return $this->belongsToMany(User::class);
-}
+    {
+        return $this->hasMany(Ticket::class);
+    }
+    
+    public function users()
+    {
+        return $this->hasManyThrough(User::class, Ticket::class, 'event_id', 'id', 'id', 'user_id');
+    }
+    
 
 
 }

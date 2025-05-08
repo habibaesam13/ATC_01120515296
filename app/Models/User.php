@@ -49,11 +49,13 @@ class User extends Authenticatable
         ];
     }
     public function tickets()
-{
-    return $this->hasMany(Ticket::class);
-}
-public function events()
-{
-    return $this->belongsToMany(Event::class);
-}
+    {
+        return $this->hasMany(Ticket::class);
+    }
+    
+    public function events()
+    {
+        return $this->hasManyThrough(Event::class, Ticket::class, 'user_id', 'id', 'id', 'event_id');
+    }
+    
 }
