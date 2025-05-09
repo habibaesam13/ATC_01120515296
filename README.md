@@ -1,66 +1,160 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# Event Booking System
 
-## About Laravel
+## Overview
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+This is a Laravel-based event booking system where users can view, book, and manage event tickets. The application provides an admin panel for event management, along with API endpoints for managing events, user authentication, and role-based permissions. The project uses Laravel 11, middleware for authentication and role-checking, and service layers to separate business logic.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### User Features
 
-## Learning Laravel
+* **Authentication:** Users can register and log in using Laravel’s built-in authentication system.
+* **Event Listings:** Users can view events displayed using a responsive grid or flexbox layout. Events already booked by the user display a "Booked" label.
+* **Event Details:** Users can view full details of an event, including:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+  * Event Name, Description, Category, Date, Venue, Price, and Image
+  * Book a ticket (1 ticket per click)
+  * After booking, users are redirected to a Congratulations page.
+* **Booking Management:**
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+  * Users can book more than one ticket for an event.
+  * Users can unbook a ticket or cancel all their booked tickets.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Admin Features
 
-## Laravel Sponsors
+* **Event Management:**
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+  * Admin can **Create**, **Read**, **Update**, and **Delete** events.
+  * Admin can manage event categories and images.
+  * Admin can create tickets for events.
+* **Role-Based Access Control:**
 
-### Premium Partners
+  * Admin has full access to all entities (events, users, categories).
+  * User can only view and book events.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### API Features
 
-## Contributing
+* **Event Management API:**
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+  * Admin can create, update, and delete events via the API.
+  * Public API route to view event details.
+* **Authentication API:**
 
-## Code of Conduct
+  * Users can register, log in, and log out via API routes with token-based authentication (Sanctum).
+* **Role-Based Access Control API:**
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+  * Admin role required for event creation and management.
+  * User role allows access to event booking and ticket management.
 
-## Security Vulnerabilities
+### Additional Features
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+* **Event Categories:** Admin can create, update, or delete categories for events. Categories are seeded into the database for easy management.
+* **Ticket Management:**
 
-## License
+  * Admin can assign tickets to events.
+  * Users can book multiple tickets, each tied to their profile.
+* **Service Layer:** A service layer is used to handle business logic for events and ticket bookings, promoting separation of concerns and reusability.
+* **Enums:** Roles are managed through an enum class for better readability and maintenance.
+* **Pagination & Lazy Loading:** Events and tickets are paginated or lazily loaded to enhance performance.
+* **Responsive Design:** The UI is built using Bootstrap to ensure a responsive layout, optimized for desktop views.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Requirements
+
+* **Laravel 11** or higher
+* PHP 8.x
+* Composer
+* MySQL or another compatible database
+
+## Installation
+
+Follow these steps to install and set up the project:
+
+1. **Clone the repository:**
+
+   ```bash
+   git clone https://github.com/habibaesam13/ATC_01120515296.git
+   ```
+
+2. **Install dependencies:**
+
+   ```bash
+   cd ATC_01120515296
+   composer install
+   ```
+
+3. **Set up the .env file:**
+   Copy the `.env.example` file to `.env`:
+
+   ```bash
+   cp .env.example .env
+   ```
+
+   Update your database credentials in the `.env` file.
+
+4. **Generate the application key:**
+
+   ```bash
+   php artisan key:generate
+   ```
+
+5. **Run migrations:**
+
+   ```bash
+   php artisan migrate
+   ```
+
+6. **Seed the database (including categories):**
+
+   ```bash
+   php artisan db:seed
+   ```
+
+7. **Start the development server:**
+
+   ```bash
+   php artisan serve
+   ```
+
+   Visit `http://localhost:8000` in your browser.
+
+## API Routes
+
+### Authentication Routes
+
+* **POST /register:** Register a new user.
+* **POST /login:** Log in an existing user and get an authentication token.
+* **POST /logout:** Log out the user (requires authentication).
+
+### Event Management (Admin Only)
+
+* **GET /admin/events/create:** Show form to create a new event.
+* **POST /admin/events/save:** Save a new event.
+* **GET /admin/events/edit/{id}:** Show form to edit an existing event.
+* **POST /admin/events/update/{id}:** Update an existing event.
+* **DELETE /admin/events/delete/{id}:** Delete an event.
+
+### Public Routes
+
+* **GET /events/show/{id}:** Show event details (available to both Admin and Users).
+
+### Role-Based Middleware
+
+* **Admin Routes:** Protected by role middleware to ensure only admins have access to event creation and management.
+* **User Routes:** Protected by role middleware to ensure only authenticated users can book/unbook tickets.
+
+## Technologies Used
+
+* **Backend:** Laravel 11
+* **Frontend:** HTML, CSS, Bootstrap (for responsive UI)
+* **Database:** MySQL (or any compatible database)
+* **Authentication:** Laravel Sanctum
+* **Middleware:** Role-based access control middleware
+* **Service Layer:** Business logic separation using services
+* **Enums:** Enum class for user roles and event status
+
+## UI Design
+
+The UI is designed for web browsers only (no mobile support). The application is fully responsive and optimized for desktop use. No design files were provided, allowing flexibility for custom UI development.
+
+
