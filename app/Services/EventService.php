@@ -128,6 +128,9 @@ class EventService
                     $ticket->delete();
                 }
             }
+            if ($imagePath !== null) {
+            $event->image = $imagePath;
+            }
 
             // Update event fields
             $event->name = $data['name'];
