@@ -50,6 +50,7 @@ This is a Laravel-based event booking system where users can view, book, and man
 ### Additional Features
 
 * **Event Categories:** Admin can create, update, or delete categories for events. Categories are seeded into the database for easy management.
+* **User Dashboard:** User can view his info and booked events details , he also able to unbooked event.
 * **Ticket Management:**
 
   * Admin can assign tickets to events.
