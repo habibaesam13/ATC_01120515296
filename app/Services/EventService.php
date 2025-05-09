@@ -61,6 +61,7 @@ class EventService
             for ($i = 0; $i < $data['number_of_tickets']; $i++) {
                 Ticket::create([
                     'event_id' => $event->id,
+                    'user_id'=>null,
                     'status' => 'available',
                 ]);
             }

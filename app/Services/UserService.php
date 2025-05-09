@@ -33,6 +33,7 @@ class UserService
         
         // Retrieve and group the tickets by event
         $tickets = Ticket::where('user_id', $userId)
+        ->where("status","booked")
             ->with('event')  // Eager load the event
             ->get()
             ->groupBy('event_id');  // Group tickets by event_id

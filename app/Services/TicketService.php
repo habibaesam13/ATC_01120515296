@@ -69,9 +69,10 @@ public function bookTicket(Event $event, $userId)
 
     // Book the ticket
     $ticket->status = 'booked';
+    $ticket->user_id=$userId;
     $ticket->save();
 
-    return 'Ticket status updated successfully.';
+    return 'Ticket booked successfully.';
 }
 
 public function unbookTicket(Event $event, $userId)
@@ -87,7 +88,8 @@ public function unbookTicket(Event $event, $userId)
     }
 
     // Unbook ticket
-    $ticket->update(['status' => 'available']);
+    $ticket->update(['status' => 'available',
+'user_id'=>null]);
     return 'Ticket unbooked.';
 }
 
@@ -97,7 +99,7 @@ public function unbookAllTickets(Event $event, $userId)
     Ticket::where('user_id', $userId)
         ->where('event_id', $event->id)
         ->where('status', 'booked')
-        ->update(['status' => 'available']);
+        ->update(['status' => 'available','user_id'=>null]);
 
     return 'All tickets unbooked.';
 }

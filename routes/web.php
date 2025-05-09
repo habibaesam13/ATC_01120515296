@@ -4,13 +4,14 @@ use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\AuthMiddleware;
 use App\Http\Middleware\RoleMiddleware;
-use App\Http\Controllers\system\UserController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\system\UserController;
 use App\Http\Controllers\system\EventController;
-use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\AdminDashboardController;
-use App\Http\Controllers\HomePage\HomePageController;
 use App\Http\Controllers\system\TicketController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\HomePage\HomePageController;
+use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\UserDashboard\UserDashboardController;
 
 /* public routes */
 
@@ -65,8 +66,9 @@ Route::post('logout', [authController::class, 'logout'])->name('logout');
 Route::get('/event/show/{id}', [EventController::class,'show'])->middleware(AuthMiddleware::class)->name("events.show");
 
     //User Routes
-Route::prefix("/user")->middleware([AuthMiddleware::class, RoleMiddleware::class . ':user',])->group(function () {
-    Route::get('/dashboard', function(){return view("User.dashboard");})->name("user.dashboard");
+    Route::prefix("/user")->middleware([AuthMiddleware::class, RoleMiddleware::class . ':user',])->group(function () {
+    Route::get('/dashboard', [UserDashboardController::class,'show'])->name("user.dashboard");
+    
     //tickets booking
     Route::post('/events/{event}/book', [EventController::class, 'bookTicket'])->name('tickets.book');
     Route::post('/events/{event}/unbook', [EventController::class, 'unbookTicket'])->name('tickets.unbook');
