@@ -152,10 +152,6 @@ Follow these steps to install and set up the project:
 * **Authentication:** Laravel Sanctum
 * **Middleware:** Role-based access control middleware
 * **Service Layer:** Business logic separation using services
-* **Enums:** Enum class for user roles and event status
-
-## UI Design
-
-The UI is designed for web browsers only (no mobile support). The application is fully responsive and optimized for desktop use. No design files were provided, allowing flexibility for custom UI development.
+* **Enums:** Enum class for user roles and event status.
 
 
